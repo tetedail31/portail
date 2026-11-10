@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<title>Débrider un lien</title>
+<style>
+:root{--bg:#0b1220;--card:#131c2e;--line:#24314a;--txt:#e8eefc;--dim:#9aa8c2;--acc:#4da3ff;--ok:#3ecf8e;--err:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:18px 16px calc(env(safe-area-inset-bottom) + 40px);max-width:640px;margin:0 auto}
+a.back{display:inline-block;color:var(--dim);text-decoration:none;font-size:.85rem;margin-bottom:14px}
+header{margin:0 0 20px}
+h1{font-size:1.45rem;margin:0 0 4px;letter-spacing:-.02em}
+header p{margin:0;color:var(--dim);font-size:.86rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:8px}
+textarea,input{width:100%;background:#0d1526;color:var(--txt);border:1px solid var(--line);
+  border-radius:10px;padding:11px 12px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+textarea{min-height:110px;resize:vertical}
+input{font-size:13px}
+button{background:var(--acc);color:#04101f;border:0;border-radius:10px;padding:11px 16px;
+  font-weight:700;font-size:.92rem;cursor:pointer}
+button.ghost{background:transparent;color:var(--dim);border:1px solid var(--line);font-weight:500}
+button:disabled{opacity:.5}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.name{font-weight:600;word-break:break-all;font-size:.95rem}
+.meta{color:var(--dim);font-size:.78rem;margin-top:3px;word-break:break-all}
+.err{color:var(--err);font-size:.83rem}
+.ok{color:var(--ok)}
+.item{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#101a2b}
+.badge{font-size:.72rem;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+.badge.on{color:var(--ok);border-color:#1d5c45}
+a.dl{color:var(--acc);text-decoration:none;font-weight:600;font-size:.85rem}
+footer{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:.75rem;color:var(--dim)}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--acc);
+  border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<a class="back" href="../">← Portail</a>
+<header>
+  <h1>Débrider un lien</h1>
+  <p>Rapidgator, 1fichier, Turbobit… via ton compte AllDebrid. La clé reste dans ce navigateur.</p>
+</header>
+
+<div class="card">
+  <div class="lbl">Clé API AllDebrid</div>
+  <input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="apikey — alldebrid.com/apikeys">
+  <div class="row">
+    <button id="savebtn" onclick="saveKey()">Enregistrer</button>
+    <span class="badge" id="state">non configurée</span>
+  </div>
+  <div class="meta" id="kmsg"></div>
+</div>
+
+<div class="card">
+  <div class="lbl">Liens à débrider</div>
+  <textarea id="links" spellcheck="false" placeholder="https://rapidgator.net/file/…&#10;https://rapidgator.net/file/…"></textarea>
+  <div class="row">
+    <button id="go" onclick="run()">Débrider</button>
+    <button class="ghost" onclick="document.getElementById('links').value='';document.getElementById('out').innerHTML=''">Vider</button>
+    <span class="meta" id="status"></span>
+  </div>
+</div>
+
+<div id="out"></div>
+
+<footer>
+  <p id="foot">Client personnel : ton abonnement AllDebrid fait le travail, cette page ne fait que l'appeler.</p>
+</footer>
+
+<script>
+var API = "https://api.alldebrid.com/v4";
+var LS = "alldebrid_key";
+var $ = function(s){ return document.querySelector(s); };
+var CODE = {
+  AUTH_BAD_APIKEY:"clé invalide", AUTH_MISSING_APIKEY:"clé absente", AUTH_USER_BANNED:"compte suspendu",
+  LINK_DOWN:"lien mort — fichier retiré de l'hébergeur",
+  LINK_HOST_NOT_SUPPORTED:"hébergeur non supporté", LINK_NOT_SUPPORTED:"lien non supporté",
+  LINK_HOST_FULL:"serveurs de l'hébergeur pleins — réessaie plus tard",
+  LINK_HOST_LIMIT_REACHED:"quota atteint chez l'hébergeur",
+  LINK_HOST_UNAVAILABLE:"hébergeur en maintenance",
+  LINK_TOO_MANY_DOWNLOADS:"trop de téléchargements simultanés",
+  LINK_PASS_PROTECTED:"lien protégé par mot de passe",
+  LINK_TEMPORARY_UNAVAILABLE:"lien temporairement indisponible",
+  MUST_BE_PREMIUM:"compte non premium",
+  FREE_TRIAL_LIMIT_REACHED:"essai gratuit épuisé",
+  NO_SERVER:"IP refusée (VPN ou serveur) — utilise une connexion résidentielle",
+  LINK_ERROR:"erreur de débridage"
+};
+function fr(code){ return CODE[code] || code; }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function size(n){ n=n||0; var u=["o","Ko","Mo","Go","To"],i=0;
+  while(n>=1024&&i<4){n/=1024;i++;} return (i?n.toFixed(1)+" "+u[i]:n+" o"); }
+function getKey(){ return localStorage.getItem(LS)||""; }
+
+async function call(path, data){
+  var key = getKey();
+  if(!key) throw {code:"NO_KEY"};
+  var body = new URLSearchParams(data||{});
+  var r = await fetch(API+"/"+path, {
+    method:"POST",
+    headers:{"Authorization":"Bearer "+key, "Content-Type":"application/x-www-form-urlencoded"},
+    body:body
+  });
+  var j;
+  try { j = await r.json(); } catch(e){ throw {code:"BAD_JSON"}; }
+  if(j.status !== "success"){
+    var e = j.error||{};
+    throw {code:e.code||"ERROR", message:e.message||""};
+  }
+  return j.data||{};
+}
+
+function paint(){
+  var k = getKey();
+  if(k){ $("#state").textContent = "enregistrée"; $("#state").className="badge on";
+         $("#key").placeholder = k.slice(0,4)+"…"+k.slice(-4)+" — coller une autre clé pour remplacer";
+         checkUser(); }
+}
+
+async function checkUser(){
+  try{
+    var d = await call("user");
+    var u = d.user||{};
+    var until = u.premiumUntil ? new Date(u.premiumUntil*1000).toLocaleDateString("fr-FR") : "—";
+    $("#state").textContent = u.username || "compte";
+    $("#state").className = "badge on";
+    $("#kmsg").textContent = (u.isPremium ? "Premium jusqu'au " : "Compte non premium — expire le ") + until;
+    $("#kmsg").style.color = u.isPremium ? "" : "var(--err)";
+  }catch(e){
+    $("#kmsg").textContent = fr(e.code) + (e.message ? " — "+e.message : "");
+    $("#kmsg").style.color = "var(--err)";
+    if(e.code && e.code.indexOf("AUTH")===0){ $("#state").textContent="clé refusée"; $("#state").className="badge"; }
+  }
+}
+
+async function saveKey(){
+  var v = $("#key").value.trim();
+  if(!v) return;
+  localStorage.setItem(LS, v); $("#key").value=""; paint();
+  $("#kmsg").textContent = "vérification…";
+}
+
+function unlockOne(link){
+  return call("link/unlock", {link:link}).then(async function(d){
+    var out = {link:link, url:d.link||"", filename:d.filename||"", host:d.hostDomain||d.host||"",
+               size:d.filesize||0, delayed:false};
+    if(!out.url && d.delayed){
+      out.delayed = true;
+      for(var i=0;i<8;i++){
+        await new Promise(function(r){ setTimeout(r, 3000); });
+        try{
+          var dd = await call("link/delayed", {id:d.delayed});
+          var items = dd.links || [];
+          if(items.length && items[0].link){
+            out.url = items[0].link; out.filename = items[0].filename||out.filename;
+            out.size = items[0].filesize||out.size; break;
+          }
+        }catch(e){}
+      }
+    }
+    if(!out.url) throw {code:"DELAYED_PENDING"};
+    return out;
+  });
+}
+
+async function run(){
+  var text = $("#links").value;
+  var urls = (text.match(/https?:\/\/[^\s<>"']+/g)||[]).filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,20);
+  var out = $("#out");
+  if(!urls.length){ $("#status").textContent = "aucun lien détecté"; return; }
+  $("#go").disabled = true; $("#status").innerHTML = '<span class="spin"></span> ' + urls.length + " lien(s)";
+  out.innerHTML = "";
+  for(var i=0;i<urls.length;i++){
+    var el = document.createElement("div"); el.className="item";
+    el.innerHTML = '<div class="meta">'+esc(urls[i].slice(0,70))+'…</div><div class="meta">en cours…</div>';
+    out.appendChild(el);
+    try{
+      var r = await unlockOne(urls[i]);
+      el.innerHTML = '<div class="name">'+esc(r.filename||"fichier")+'</div>'
+        + '<div class="meta">'+esc(r.host)+" · "+size(r.size)+(r.delayed?" · différé":"")+'</div>'
+        + '<div class="row"><a class="dl" href="'+esc(r.url)+'" target="_blank" rel="noreferrer">Télécharger</a>'
+        + '<button class="ghost" onclick="copy(this)" data-u="'+esc(r.url)+'">Copier le lien</button></div>';
+    }catch(e){
+      el.innerHTML = '<div class="name" style="font-size:.85rem">'+esc(urls[i].slice(0,50))+'…</div>'
+        + '<div class="err">'+esc(fr(e.code))+(e.message?' · '+esc(e.message):'')+'</div>';
+    }
+    await new Promise(function(r){ setTimeout(r, 200); });
+  }
+  $("#go").disabled = false; $("#status").textContent = "";
+}
+
+function copy(btn){
+  var u = btn.getAttribute("data-u");
+  navigator.clipboard.writeText(u).then(function(){
+    btn.textContent = "copié"; setTimeout(function(){ btn.textContent="Copier le lien"; }, 1500);
+  }).catch(function(){ window.prompt("Copie manuelle :", u); });
+}
+
+paint();
+</script>
+</body>
+</html>
