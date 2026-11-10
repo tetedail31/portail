@@ -4,355 +4,62 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
-<title>Avion en famille — Biarritz</title>
+<title>Portail</title>
 <style>
-:root{
-  --bg:#0b1220; --card:#131c2e; --card2:#182338; --line:#24314a;
-  --txt:#e8eefc; --dim:#9aa8c2; --acc:#4da3ff; --ok:#38d39f; --warn:#ffb454; --bad:#ff6b6b;
-  --r:14px;
-}
+:root{--bg:#0b1220;--card:#131c2e;--line:#24314a;--txt:#e8eefc;--dim:#9aa8c2;--acc:#4da3ff}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+body{margin:0;background:var(--bg);color:var(--txt);
   font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  -webkit-text-size-adjust:100%}
-body{padding:18px 14px 60px;max-width:720px;margin:0 auto}
-h1{font-size:1.5rem;margin:0 0 4px;letter-spacing:-.02em}
-h2{font-size:1.06rem;margin:30px 0 10px;letter-spacing:-.01em}
-h3{font-size:.98rem;margin:0 0 6px}
-p{margin:0 0 10px}
-.sub{color:var(--dim);font-size:.85rem;margin:0 0 18px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:0 0 12px}
-.card.hi{border-color:#2d5c8f;background:linear-gradient(180deg,#152440,#131c2e)}
-label{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin:0 0 5px}
-input,select{width:100%;background:#0d1526;color:var(--txt);border:1px solid var(--line);
-  border-radius:10px;padding:11px 12px;font-size:1rem;font-family:inherit}
-input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px}
-.grid{display:grid;gap:10px}
-.g2{grid-template-columns:1fr 1fr}
-.g3{grid-template-columns:1fr 1fr 1fr}
-.row{margin-bottom:10px}
-a.btn,button.btn{display:flex;align-items:center;justify-content:space-between;gap:8px;
-  text-decoration:none;color:var(--txt);background:#1b2740;border:1px solid var(--line);
-  border-radius:11px;padding:13px 14px;font-size:.95rem;font-weight:600;width:100%;
-  text-align:left;font-family:inherit;cursor:pointer}
-a.btn{background:#1b2740}
-a.btn:active,button.btn:active{transform:scale(.985)}
-a.btn .tag,button.btn .tag{font-weight:400;color:var(--dim);font-size:.78rem}
-a.btn.pri{background:#17405f;border-color:#2f6f9e}
-.btns{display:grid;gap:8px;margin-top:12px}
-.hint{font-size:.8rem;color:var(--dim);margin:8px 0 0}
-.tag{font-size:.72rem;padding:2px 7px;border-radius:6px;background:#0d1526;color:var(--dim);border:1px solid var(--line)}
-.tag.ok{color:var(--ok);border-color:#1d5c48}
-.tag.warn{color:var(--warn);border-color:#5c4520}
-.tag.bad{color:var(--bad);border-color:#5c2626}
-ul,ol{margin:0 0 10px;padding-left:20px}
-li{margin:0 0 6px}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8rem;
-  background:#0d1526;border:1px solid var(--line);border-radius:8px;padding:10px;white-space:pre-wrap;color:#cfe0ff}
-.mini{font-size:.83rem;color:var(--dim)}
-table{width:100%;border-collapse:collapse;font-size:.86rem}
-th,td{padding:7px 6px;text-align:right;border-bottom:1px solid var(--line)}
-th{color:var(--dim);font-weight:500;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em}
-th:first-child,td:first-child{text-align:left}
-td input{padding:7px 6px;font-size:.88rem;text-align:right}
-.hub{display:grid;grid-template-columns:1.15fr .95fr .75fr .75fr .75fr .75fr;gap:4px;align-items:center;
-  padding:5px 0;border-bottom:1px solid var(--line)}
-.hub:last-child{border-bottom:0}
-.hub .nm{font-size:.85rem}
-.hub .nm small{display:block;color:var(--dim);font-size:.7rem}
-.hub input{padding:8px 6px;font-size:.85rem}
-.tot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:12px;
-  padding-top:12px;border-top:1px solid var(--line);font-size:.9rem}
-.tot b{font-size:1.15rem;color:var(--ok)}
-.chk{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);
-  text-transform:none;letter-spacing:normal;color:var(--txt);font-size:.95rem;margin:0}
-.chk:last-child{border-bottom:0}
-.chk input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--acc)}
-.chk span{font-size:.93rem;line-height:1.45}
-.foot{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);font-size:.78rem;color:var(--dim)}
-.copyok{color:var(--ok)}
+  padding:26px 16px calc(env(safe-area-inset-bottom) + 40px);max-width:640px;margin:0 auto}
+header{margin:0 0 22px}
+h1{font-size:1.55rem;margin:0 0 4px;letter-spacing:-.02em}
+header p{margin:0;color:var(--dim);font-size:.88rem}
+.grid{display:grid;gap:12px}
+a.app{display:block;text-decoration:none;color:inherit;background:var(--card);
+  border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;
+  transition:border-color .15s ease,transform .12s ease}
+a.app:active{transform:scale(.99);border-color:#2f6f9e}
+.top{display:flex;align-items:center;justify-content:space-between;margin:0 0 8px}
+.ico{font-size:1.35rem;line-height:1}
+.meta{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--dim)}
+a.app h2{font-size:1.02rem;margin:0 0 5px}
+a.app p{margin:0 0 10px;font-size:.88rem;color:var(--dim)}
+.go{font-size:.82rem;color:var(--acc);font-weight:600}
+footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:.76rem;color:var(--dim)}
+footer code{background:#0d1526;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.74rem}
 </style>
 </head>
 <body>
+<header>
+  <h1>Portail</h1>
+  <p>Toutes les pages du site, au même endroit. Chacune est un fichier autonome, qui marche hors ligne une fois ouvert.</p>
+</header>
 
-<h1>Avion en famille</h1>
-<p class="sub">Biarritz &amp; hubs alentour · chiffres vérifiés le 10 novembre 2026</p>
+<main class="grid">
+  <!-- Modèle pour la prochaine page :
+      1. le fichier va dans src/<slug>/index.html
+      2. on ajoute ici un bloc <a class="app"> avec le même slug
+  -->
 
-<div class="card hi">
-  <h3>La règle qui compte</h3>
-  <p class="mini">Le prix affiché par personne n'est pas le prix de la famille. Quatre billets, deux valises, quatre sièges choisis et une carte bancaire qui prend une commission : c'est le total qui décide, pas le « à partir de ».</p>
-</div>
+  <a class="app" href="./avion-famille/">
+    <div class="top"><span class="ico">✈️</span><span class="meta">Voyage · famille</span></div>
+    <h2>Avion en famille</h2>
+    <p>Trouver un vol depuis Biarritz, comparer les hubs en coût porte-à-porte, éviter le self-transfer et les sièges sans hublot.</p>
+    <span class="go">Ouvrir →</span>
+  </a>
 
-<h2>1. Chercher un vol</h2>
-<div class="card">
-  <div class="row">
-    <label for="ori">Départ</label>
-    <select id="ori">
-      <option value="BIQ|biarritz-biq" selected>Biarritz (BIQ) — le plus proche</option>
-      <option value="BIO|bilbao-bio">Bilbao (BIO) — 2 h de route</option>
-      <option value="EAS|san-sebastian-eas">Saint-Sébastien (EAS) — 45 min</option>
-      <option value="BOD|bordeaux-bod">Bordeaux (BOD) — 2 h</option>
-      <option value="TLS|toulouse-tls">Toulouse (TLS) — 3 h</option>
-      <option value="MAD|madrid-mad">Madrid (MAD) — 5 h</option>
-      <option value="PUF|pau-puf">Pau (PUF) — 1 h 15</option>
-    </select>
-  </div>
-  <div class="row grid g2">
-    <div><label for="des">Arrivée (code IATA)</label><input id="des" value="LIS" maxlength="3" placeholder="LIS" autocapitalize="characters" autocomplete="off"></div>
-    <div><label for="pax">Passagers</label><input id="pax" value="2 ad. + 2 enf." readonly></div>
-  </div>
-  <div class="row grid g2">
-    <div><label for="d1">Aller</label><input id="d1" type="date" value="2027-04-10"></div>
-    <div><label for="d2">Retour</label><input id="d2" type="date" value="2027-04-17"></div>
-  </div>
-  <p class="hint" style="margin:-2px 0 12px">Laisse le retour vide pour un aller simple.</p>
+  <a class="app" href="./10-min-matin/">
+    <div class="top"><span class="ico">🤸</span><span class="meta">Sport · mobilité</span></div>
+    <h2>10 min · Matin</h2>
+    <p>Trois séances de dix minutes, minuteur 40/20, consignes écrites et démonstrations. Hanches, épaules, appuis.</p>
+    <span class="go">Ouvrir →</span>
+  </a>
+</main>
 
-  <div class="btns">
-    <a class="btn pri" id="lnk-gf" target="_blank" rel="noopener">Google Flights <span class="tag">commencer ici</span></a>
-    <a class="btn" id="lnk-fc" target="_blank" rel="noopener">FlightConnections <span class="tag">vols directs</span></a>
-    <a class="btn" id="lnk-al" target="_blank" rel="noopener">AeroLOPA <span class="tag">sièges &amp; hublots</span></a>
-    <a class="btn" id="lnk-sa" target="_blank" rel="noopener">seats.aero <span class="tag">si tu as des miles</span></a>
-    <a class="btn" id="lnk-kw" target="_blank" rel="noopener">Kiwi.com <span class="tag">risque — voir plus bas</span></a>
-  </div>
-  <p class="hint">Trois de ces sites refusent les liens pré-remplis (ITA Matrix, seats.aero, Kiwi). Pour celui-là, copie le bloc ci-dessous : tu n'auras plus qu'à coller les champs.</p>
-  <div class="mono" id="req"></div>
-  <button class="btn" id="cp" style="margin-top:8px">Copier la requête</button>
-</div>
-
-<h2>2. L'ordre d'usage</h2>
-<div class="card">
-<ol>
-  <li><b>Google Flights</b>, dates exactes, en euros. Regarde ce qui part de BIQ sans escale : si un direct existe et que l'écart de prix reste sous 150 € par personne, la question est réglée, tu ne vas pas à Bordeaux.</li>
-  <li><b>FlightConnections</b> pour savoir ce qui existe vraiment en direct depuis BIQ, BIO ou BOD. C'est un plan de réseau, pas un comparateur : aucun prix.</li>
-  <li><b>ITA Matrix</b> seulement si rien de direct ne convient : il montre la construction tarifaire et des tarifs que Google Flights masque. Il ne vend rien, il faut retrouver l'itinéraire ailleurs.</li>
-  <li><b>AeroLOPA</b> une fois le vol choisi : quatre sièges ensemble, et savoir si la rangée a un hublot. Sur un long-courrier familial, ça vaut plus que 20 € d'écart.</li>
-  <li><b>seats.aero</b> uniquement si tu as déjà des miles dans un programme. Sinon la page ne te sert à rien.</li>
-</ol>
-</div>
-
-<h2>3. Les outils, ce qu'ils valent</h2>
-
-<div class="card">
-  <h3>Google Flights <span class="tag ok">gratuit</span></h3>
-  <p class="mini">Le seul point de départ utile. Onglet <b>Explorer</b> : carte des destinations les moins chères depuis ton aéroport, sans destination en tête — c'est comme ça qu'on trouve un week-end à 90 € plutôt qu'un vol à 300 €.</p>
-  <p class="mini"><b>Limite :</b> ne montre pas la construction tarifaire, et masque certains tarifs vendus via des agences.</p>
-</div>
-
-<div class="card">
-  <h3>ITA Matrix (Google) <span class="tag ok">gratuit</span></h3>
-  <p class="mini">L'ancien moteur de Google, racheté avec la société ITA en 2011. Il affiche le détail du tarif : code de classe, règles, constructions avec deux compagnies. C'est lui qui trouve les itinéraires bizarres et bon marché.</p>
-  <p class="mini"><b>Limite :</b> interface de 2005, aucun paiement, et certaines combinaisons affichées ne sont pas réservables en ligne.</p>
-</div>
-
-<div class="card">
-  <h3>FlightConnections <span class="tag warn">gratuit avec pub · ~3 €/mois</span></h3>
-  <p class="mini">Répond à une seule question : quelles liaisons directes existent depuis cet aéroport, et par qui. Gratuit avec publicité ; les filtres et l'affichage plein écran sont derrière l'abonnement.</p>
-  <p class="mini"><b>Limite :</b> données de programme, pas de prix, et les fréquences changent avec la saison.</p>
-</div>
-
-<div class="card">
-  <h3>AeroLOPA <span class="tag ok">web gratuit</span></h3>
-  <p class="mini">Plans de cabine dessinés à l'échelle par un architecte, avec la position réelle des fenêtres par appareil. Le seul outil de la liste qui te dit qu'un « siège hublot » n'a pas de hublot, et si quatre sièges peuvent être côte à côte.</p>
-  <p class="mini"><b>Coût :</b> site web gratuit ; l'application iOS/Android lancée en septembre 2026 est un abonnement avec 14 jours d'essai (29 à 45 $/an selon la source tarifaire). <b>Limite :</b> dépend du type d'avion réellement affecté, qui peut changer jusqu'à l'embarquement.</p>
-</div>
-
-<div class="card">
-  <h3>Kiwi.com <span class="tag bad">self-transfer</span></h3>
-  <p class="mini">Combine deux compagnies qui ne travaillent pas ensemble : c'est réel, et le prix peut chuter nettement. Mais ce sont deux billets séparés. Escale manquée : la seconde compagnie ne te doit rien, pas d'hôtel, pas d'indemnisation européenne.</p>
-  <p class="mini"><b>Coût :</b> la protection existe, s'appelle désormais Disruption Protection Basic / Premium, et se paie. <b>Verdict famille :</b> à éviter avec des enfants et des bagages en soute.</p>
-</div>
-
-<div class="card">
-  <h3>Skiplagged <span class="tag bad">hors contrat</span></h3>
-  <p class="mini">Tu achètes A→B→C et tu descends à B. Ça marche : l'écart va souvent de 20 à 40 % sur un aller simple sans bagage en soute — ordre de grandeur, pas une garantie. Le site facture des frais uniquement quand il économise, et annonce 180 $ d'économie moyenne (chiffre de la maison, non vérifiable).</p>
-  <p class="mini"><b>Limite :</b> interdit par les conditions de transport de la plupart des compagnies — compte fermé, miles annulés ; sur un aller-retour, sauter un segment annule la suite. Condamné à 9,4 M$ aux États-Unis (jugement confirmé en mai 2025), toujours en ligne. <b>Jamais avec la famille.</b></p>
-</div>
-
-<div class="card">
-  <h3>seats.aero <span class="tag warn">gratuit limité · 12,99 $/mois</span></h3>
-  <p class="mini">Cherche les places prime (miles) sur une vingtaine de programmes d'un coup, toutes alliances. Gratuit : résultats en cache et fenêtre de 60 jours seulement. Pro depuis le 9 novembre 2026 : 12,99 $/mois ou 109,99 $/an (une remise de lancement de −20 % court jusqu'au 30/11).</p>
-  <p class="mini"><b>Limite :</b> ne vend pas de billets, ne sert à rien sans miles, et les disponibilités bougent en quelques minutes.</p>
-</div>
-
-<div class="card">
-  <h3>AirHelp <span class="tag warn">35 % de commission</span></h3>
-  <p class="mini">Retard de 3 h ou plus à l'arrivée, annulation, surbooking : 250 €, 400 € ou 600 € par passager (règlement CE 261/2004). AirHelp prend 35 %, plus 15 % si le dossier part en contentieux (3 % des cas) — donc 50 % au pire, rien si tu n'obtiens rien.</p>
-  <p class="mini"><b>Le réflexe gratuit :</b> réclamation directe à la compagnie, puis saisine de la DGAC si elle refuse. AirHelp ne se justifie que si tu ne veux pas remplir un formulaire, ou si la compagnie traîne.</p>
-</div>
-
-<h2>4. Comparer les hubs — coût porte-à-porte</h2>
-<div class="card">
-  <p class="mini">Le vol le moins cher n'est pas le voyage le moins cher. Renseigne le prix du vol par personne, le trajet depuis Bayonne, le parking et l'éventuelle nuit d'hôtel ; le total famille se recalcule.</p>
-  <div class="hub" style="border-bottom:1px solid var(--line);padding-bottom:6px">
-    <div class="mini">Hub</div><div class="mini" style="text-align:right">Vol/pers</div><div class="mini" style="text-align:right">Trajet</div><div class="mini" style="text-align:right">H</div><div class="mini" style="text-align:right">Park.</div><div class="mini" style="text-align:right">Nuit</div>
-  </div>
-  <div id="hubs"></div>
-  <div class="tot"><span>Meilleur total famille (4 pers., A/R)</span><b id="tot">—</b></div>
-  <div class="tot"><span>Route ajoutée pour ce hub (A/R)</span><b id="hrs" style="color:var(--warn)">—</b></div>
-  <p class="hint">Lecture : au-delà de 4 h de route ajoutées, un vol direct depuis BIQ reste gagnant même 120 € plus cher par personne — c'est du temps de vacances, pas du temps de trajet.</p>
-</div>
-
-<h2>5. Ce qu'on ne fait pas en famille</h2>
-<div class="card">
-  <ul>
-    <li><b>Le self-transfer avec bagages.</b> Deux billets, une escale, une valise qui n'arrive pas : la protection est payante et ne couvre pas l'hôtel par défaut.</li>
-    <li><b>Le saut de segment sur un aller-retour.</b> Au mieux tu perds le retour, au pire le compte de la compagnie est fermé.</li>
-    <li><b>Réserver le premier prix sans regarder les bagages.</b> Sur un low-cost, deux valises en soute peuvent ajouter plus que la différence avec un vol régulier.</li>
-    <li><b>Prendre une escale de 1 h 05.</b> Elle se vend, elle ne se tient pas avec quatre personnes en correspondance.</li>
-  </ul>
-</div>
-
-<h2>6. Avant de payer</h2>
-<div class="card" id="chk">
-  <label class="chk"><input type="checkbox" data-k="a1"><span>Les quatre billets sont au même tarif (les enfants ne paient plus moins cher, mais certaines offres « famille » existent encore)</span></label>
-  <label class="chk"><input type="checkbox" data-k="a2"><span>Bagages en soute chiffrés : nombre, poids, prix aller <i>et</i> retour</span></label>
-  <label class="chk"><input type="checkbox" data-k="a3"><span>Sièges côte à côte vérifiés sur AeroLOPA, et pas une rangée sans hublot</span></label>
-  <label class="chk"><input type="checkbox" data-k="a4"><span>Escale d'au moins 1 h 30 en correspondance, 2 h si changement de terminal</span></label>
-  <label class="chk"><input type="checkbox" data-k="a5"><span>Le billet est un seul contrat (une compagnie ou un vrai accord) — pas deux billets collés</span></label>
-  <label class="chk"><input type="checkbox" data-k="a6"><span>Prix comparé sur le site de la compagnie après celui du comparateur : parfois 30 € moins cher en direct</span></label>
-  <label class="chk"><input type="checkbox" data-k="a7"><span>Annulation : conditions et délai de rétractation (24 h aux États-Unis, pas en Europe)</span></label>
-  <label class="chk"><input type="checkbox" data-k="a8"><span>Le total famille noté ici avant de valider, pour ne pas se raviser sur un prix par personne</span></label>
-</div>
-
-<div class="foot">
-  <p><b>Limites de cette page.</b> Elle ne consulte aucun prix en direct et ne réserve rien : elle t'emmène au bon endroit avec les bons champs remplis, en client-side, sans compte ni serveur. Les tarifs et les grilles cités sont ceux du 10 novembre 2026 et bougent.</p>
-  <p>Autre page du même site : <a href="./10-min-matin/" style="color:var(--acc)">10 min · Matin</a> — la séance du matin, avec son minuteur.</p>
-  <p>Sources vérifiées ce jour-là : grille tarifaire AirHelp (35 % + 15 % contentieux), tarifs seats.aero (12,99 $/mois, 109,99 $/an, hausse au 9/11/2026), jugement American Airlines c. Skiplagged (9,4 M$ confirmés en mai 2025), règlement CE 261/2004 (250/400/600 €), AeroLOPA (web gratuit, app payante depuis septembre 2026), FlightConnections (freemium), Secret Flying (plans payants depuis avril 2026, absent de cette page car utile surtout depuis le Royaume-Uni).</p>
-</div>
-
-<script>
-(function(){
-  "use strict";
-  var $ = function(id){ return document.getElementById(id); };
-  var ori = $("ori"), des = $("des"), d1 = $("d1"), d2 = $("d2");
-
-  function code(){ return ori.value.split("|")[0]; }
-  function slug(){ return ori.value.split("|")[1]; }
-  function dest(){ return (des.value || "").trim().toUpperCase().slice(0,3); }
-  function gfQuery(){
-    var q = "Flights from " + code() + " to " + dest() + " on " + d1.value;
-    if (d2.value) q += " through " + d2.value;
-    else q += " one way";
-    return "https://www.google.com/travel/flights?hl=fr&curr=EUR&q=" + encodeURIComponent(q);
-  }
-  function reqText(){
-    var t = "Origine : " + code() + "\nDestination : " + dest() + "\nAller : " + d1.value;
-    t += (d2.value ? "\nRetour : " + d2.value : "\nAller simple");
-    t += "\nPassagers : 2 adultes, 2 enfants\nCabine : economique";
-    return t;
-  }
-  function refresh(){
-    var d = dest();
-    $("lnk-gf").href = d ? gfQuery() : "https://www.google.com/travel/flights?hl=fr&curr=EUR";
-    $("lnk-gf").firstChild.nodeValue = d ? "Google Flights " + code() + " → " + d + " " : "Google Flights ";
-    $("lnk-fc").href = "https://www.flightconnections.com/flights-from-" + slug();
-    $("lnk-al").href = "https://www.aerolopa.com/super-schedule";
-    $("lnk-sa").href = "https://seats.aero/";
-    $("lnk-kw").href = "https://www.kiwi.com/en/";
-    $("req").textContent = reqText();
-    try{
-      localStorage.setItem("avion.gf", [ori.value, des.value, d1.value, d2.value].join("~"));
-    }catch(e){}
-  }
-
-  var saved = null;
-  try{ saved = localStorage.getItem("avion.gf"); }catch(e){}
-  if (saved){
-    var p = saved.split("~");
-    if (p.length === 4){
-      if (p[0]) ori.value = p[0];
-      des.value = p[1] || "LIS";
-      if (p[2]) d1.value = p[2];
-      d2.value = p[3] || "";
-    }
-  }
-
-  [ori, des, d1, d2].forEach(function(el){
-    el.addEventListener("change", refresh);
-    el.addEventListener("input", refresh);
-  });
-
-  function flash(btn, txt){
-    btn.textContent = txt;
-    setTimeout(function(){ btn.textContent = "Copier la requête"; }, 1600);
-  }
-  $("cp").addEventListener("click", function(){
-    var txt = reqText(), btn = this;
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(txt).then(function(){ flash(btn, "Copié"); },
-        function(){ flash(btn, "Copie refusée — sélectionne le bloc"); });
-    } else {
-      var ta = document.createElement("textarea");
-      ta.value = txt; document.body.appendChild(ta); ta.select();
-      try{ document.execCommand("copy"); flash(btn, "Copié"); }
-      catch(e){ flash(btn, "Copie refusée — sélectionne le bloc"); }
-      document.body.removeChild(ta);
-    }
-  });
-
-  // ---- comparateur de hubs ----
-  var HUBS = [
-    ["BIQ","Biarritz","0 h",0,0,0,0],
-    ["EAS","St-Sébastien","0,75 h",0,0.75,0,0],
-    ["BIO","Bilbao","2 h",0,2,0,0],
-    ["BOD","Bordeaux","2 h",0,2,0,0],
-    ["MAD","Madrid","5 h",0,5,0,0]
-  ];
-  var box = $("hubs");
-  var rows = [];
-  HUBS.forEach(function(h, i){
-    var r = document.createElement("div");
-    r.className = "hub";
-    var id = "h" + i;
-    r.innerHTML = '<div class="nm">' + h[0] + '<small>' + h[1] + '</small></div>' +
-      '<div><input id="' + id + '_p" type="number" inputmode="numeric" min="0" placeholder="—" value="' + (h[3]||"") + '"></div>' +
-      '<div><input id="' + id + '_t" type="number" inputmode="numeric" min="0" placeholder="—"></div>' +
-      '<div><input id="' + id + '_h" type="number" inputmode="decimal" min="0" step="0.25" placeholder="' + h[2] + '" value="' + (h[4]||"") + '"></div>' +
-      '<div><input id="' + id + '_k" type="number" inputmode="numeric" min="0" placeholder="—"></div>' +
-      '<div><input id="' + id + '_n" type="number" inputmode="numeric" min="0" placeholder="—"></div>';
-    box.appendChild(r);
-    rows.push({p:id+"_p", t:id+"_t", h:id+"_h", k:id+"_k", n:id+"_n"});
-  });
-
-  function num(v){ var n = parseFloat(v); return isFinite(n) ? n : 0; }
-  function calc(){
-    var best = -1, bestTot = Infinity, bestH = 0;
-    rows.forEach(function(r, i){
-      var p = num($(r.p).value), t = num($(r.t).value), h = num($(r.h).value),
-          k = num($(r.k).value), n = num($(r.n).value);
-      var tot = p*4 + t*2 + k + n;
-      if (tot > 0 && tot < bestTot){ bestTot = tot; best = i; bestH = h + t*0; }
-    });
-    $("tot").textContent = bestTot === Infinity ? "—"
-      : HUBS[best][0] + " · " + bestTot.toFixed(0) + " €";
-    $("hrs").textContent = bestH ? (bestH*2).toFixed(2).replace(".", ",") + " h" : "aucune";
-    rows.forEach(function(r, i){
-      $(r.p).parentElement.parentElement.style.opacity = (best === i ? "1" : ".7");
-    });
-  }
-  rows.forEach(function(r){
-    ["p","t","h","k","n"].forEach(function(k){
-      $(r[k]).addEventListener("input", calc);
-    });
-  });
-  calc();
-
-  // ---- checklist ----
-  var boxes = document.querySelectorAll("#chk input");
-  function saveChk(){
-    var st = {};
-    Array.prototype.forEach.call(boxes, function(b){ st[b.getAttribute("data-k")] = b.checked; });
-    try{ localStorage.setItem("avion.chk", JSON.stringify(st)); }catch(e){}
-  }
-  var st = {};
-  try{ st = JSON.parse(localStorage.getItem("avion.chk") || "{}"); }catch(e){}
-  Array.prototype.forEach.call(boxes, function(b){
-    if (st[b.getAttribute("data-k")]) b.checked = true;
-    b.addEventListener("change", saveChk);
-  });
-
-  refresh();
-})();
-</script>
+<footer>
+  <p>Ajouter une page : un dossier dans <code>src/</code>, une entrée dans le bloc ci-dessus, puis <code>sh deploy.sh</code>.</p>
+  <p>Site statique hébergé sur GitHub Pages. Aucune donnée n'est envoyée : pas de compte, pas de mesure d'audience.</p>
+</footer>
 </body>
 </html>
